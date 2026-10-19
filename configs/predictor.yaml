@@ -1,0 +1,10 @@
+# MAL predictive network f^pred, g^pred (paper Sec. 4.3 and 5.1)
+model: predictor
+d: 32             # d_pred
+num_layers: 2
+input_kernel: 5
+window: 50        # l
+epochs: 500
+eval_every: 10
+batch_size: 4096
+lr: 1.0e-4

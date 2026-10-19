@@ -1,0 +1,11 @@
+# Tested with Python 3.11, torch 2.1.2 (CUDA 12.1), numpy 1.26.4, pandas 2.2.3
+torch>=2.0
+numpy>=1.24,<2
+pandas>=2.0,<3        # universal-portfolios depends on pandas-datareader, which breaks with pandas 3
+scipy
+matplotlib
+seaborn
+pyyaml
+einops
+yfinance>=0.2.50      # data download only
+universal-portfolios  # classical benchmarks (CRP, BAH, EG, OLMAR, RMR)

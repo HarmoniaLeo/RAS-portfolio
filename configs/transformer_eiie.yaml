@@ -1,0 +1,16 @@
+# Transformer EIIE (paper Sec. 5.1); set gamma > 0 for ARM and mal: true (+ predictor) for MAL
+model: transformer_eiie
+d: 32
+num_layers: 2     # N
+input_kernel: 5
+window: 50        # l
+gamma: 0.0        # ARM masking ratio, candidates {0.0, 0.2, 0.5, 0.8}
+mal: false
+predictor: ""
+holding_in_score: false
+transaction_cost: 0.0006
+epochs: 1000
+eval_every: 10
+batch_size: 64
+lr: 1.0e-4
+restart_prob: 0.05

@@ -1,0 +1,12 @@
+# Baseline: HGAM
+model: hgam
+d: 16
+num_layers: 2
+window: 50
+gamma: 0.0
+transaction_cost: 0.0006
+epochs: 1000
+eval_every: 10
+batch_size: 64
+lr: 1.0e-4
+restart_prob: 0.05
