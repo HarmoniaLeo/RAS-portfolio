@@ -28,10 +28,7 @@ def init_weights(module):
 def uses_holding(cfg):
     """Whether the holding w_{t,m} is concatenated to the embedding before g.
 
-    The score head of the paper is z = g([h~; w]). Most released runs were,
-    however, trained without the holding in the score (``holding_in_score:
-    false``, the default); the holding then only affects the reward through the
-    transaction cost. The released checkpoints record the setting they used.
+    Set by ``holding_in_score``; each released checkpoint records its setting.
     LSRE-CAAN never uses it.
     """
     return bool(cfg.get("holding_in_score")) and cfg["model"] != "lsre_caan"

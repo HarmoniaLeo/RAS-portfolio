@@ -9,8 +9,7 @@ The conventions follow the notebooks that produced the paper: the ASR of a
 seed uses the sample standard deviation (ddof=1) of its returns, except in the
 COVID-19 row of the regime table (ddof=0); the spread over seeds is the
 population standard deviation (ddof=0) for AR/ASR/ACR/Train Reward and the
-sample standard deviation (ddof=1) for Rank IC and Pearson; for Mean Bias and
-Cohen's d the paper reports the sample variance over seeds.
+sample standard deviation (ddof=1) for Rank IC, Pearson, Mean Bias and Cohen's d.
 """
 import json
 import os
@@ -197,11 +196,7 @@ def mal_table(res, close):
                            ("Mean Bias", metrics.mean_bias(z, r)), ("Cohen's d", metrics.cohens_d(z, r))):
             stats["z_hat"][key].append(value)
     for name, values in stats.items():
-        row = {"Score": name, "Rank IC": summarize(values["Rank IC"], ddof=1), "Pearson": summarize(values["Pearson"], ddof=1)}
-        for key in ("Mean Bias", "Cohen's d"):
-            mean, std = summarize(values[key], ddof=1)
-            row[f"{key} (± var.)"] = (mean, std ** 2)
-        rows.append(row)
+        rows.append({"Score": name, **{k: summarize(v, ddof=1) for k, v in values.items()}})
     return rows
 
 

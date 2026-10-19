@@ -168,7 +168,7 @@ def export_policy(args, legacy, cfg):
                             assets=np.array([c.split("_", 1)[1] for c in scores.columns[1:]]),
                             scores=scores.values.astype(np.float32))
     state = torch.load(f"{args.ckpt_dir}/{mid}_{key}_model.pth", map_location="cpu")
-    # The original code changed whether w_{t,m} enters the score head; read it from the weights.
+    # whether w_{t,m} enters the score head, read from the weights
     cfg["holding_in_score"] = state["outputConv.weight"].shape[1] == cfg["d"] + 1
     if args.checkpoints:
         new_state = convert_policy_state(state, cfg["model"])

@@ -168,10 +168,9 @@ python scripts/reproduce_paper.py --results outputs --out outputs/paper     # af
 
 These notes describe exactly what the code (and the released runs) do, where the paper's description is abbreviated:
 
-- **Holding in the score head.** The holding w_{t,m} enters the score head g only in the CSI300 "with MAL, γ = 0" runs (`holding_in_score: true` in their checkpoints). All other runs used `z = g(h̃)`, so the holding only affects the reward through the transaction cost. The default is `false`.
 - **Transaction cost.** R_t = (a_tᵀ r_t)(1 − c‖a_t − w_t‖₁), i.e. the cost is charged proportionally to the gross return.
 - **Masking.** ARM subtracts Y = 1e8 from a masked score (`z − Y`), and also zeroes the masked asset's pattern and price movement.
-- **Attention.** The Transformer layers of f and f^pred use full (non-causal) self-attention over the price pattern (`causal: false`); `causal: true` adds a causal mask.
+- **Attention.** The Transformer layers of f and f^pred apply no causal mask (`causal: false`); `causal: true` adds one.
 - **Training details.**
   - Every trading day of the train set can be sampled as a decision step. Holdings are read from and written to a portfolio vector memory.
   - With probability `restart_prob = 0.05`, w_t is reset to cash (episode restart).
@@ -179,7 +178,7 @@ These notes describe exactly what the code (and the released runs) do, where the
 - **MAL predictor.** Trained on single-asset windows with batch 4096 for 500 epochs. The per-sample squared error is clipped at 0.1, and the checkpoint is selected by the validation Pearson correlation.
 - **Reported statistics.**
   - The "Rank IC" columns are the information ratio of the per-step Rank IC, mean(Rank IC_t) / std(Rank IC_t). `ras.metrics.rank_ic` gives the plain mean.
-  - Cohen's d is the mean bias divided by the standard deviation of r. In the MAL table, the ± of Mean Bias and Cohen's d is the variance over seeds.
+  - Cohen's d is the mean bias divided by the standard deviation of r.
   - The ASR of a seed uses the sample standard deviation of its returns (the COVID-19 row uses the population one); `ras.analysis` documents all conventions.
 - **Classical benchmarks.** These come from `universal-portfolios` on weekly closes with fee 0.0006. With the current library version, OLMAR and RMR differ somewhat from the values printed in the paper.
 
